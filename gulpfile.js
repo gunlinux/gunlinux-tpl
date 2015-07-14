@@ -1,4 +1,5 @@
 // configuration
+
 var output = 'build';
 var js = ['_src/js/*.js'];
 var css = ['_src/css/*.css'];
@@ -12,11 +13,29 @@ var del = require('del');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var sourcemaps = require('gulp-sourcemaps');
+var path = require('path');
 
 function log(error) {
     console.log(error.toString());
     this.emit('end');
 }
+var fs = require('fs');
+function get_version() {
+    var text = fs.readFileSync('./package.json', 'utf8');
+    return JSON.parse(text.toString()).version;
+};
+
+var version = get_version();
+
+var getJsonData = function (file) {
+    d = {};
+    try {
+        d = require('./tpl/data/' + path.basename(file.relative, '.html') + '.json');
+    } catch (err) {}
+    d.version = version;
+    return d;
+};
+
 // css
 var autoprefixerOptions = {browsers: ['> 1%', 'IE 7']};
 processors = [
@@ -36,6 +55,7 @@ var uglify = require('gulp-uglify');
 // tpl
 var nunjucksRender = require('gulp-nunjucks-render');
 var html5Lint = require('gulp-html5-lint');
+var data = require('gulp-data');
 // images
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
@@ -58,7 +78,8 @@ gulp.task('styles', function () {
 
 gulp.task('tpl', function () {
     nunjucksRender.nunjucks.configure(tpl, {watch: false});
-    return gulp.src(tpl + 'pages/*.html')
+    return gulp.src([tpl + 'pages/*.html'])
+         .pipe(data(getJsonData))
         .pipe(nunjucksRender()).on('error', log)
         .pipe(html5Lint()).on('error', log)
         .pipe(gulp.dest(output))
