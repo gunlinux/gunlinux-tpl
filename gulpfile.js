@@ -34,7 +34,7 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var uglify = require('gulp-uglify');
 // tpl
-var jade = require('gulp-jade');
+var nunjucksRender = require('gulp-nunjucks-render');
 var html5Lint = require('gulp-html5-lint');
 // images
 var imagemin = require('gulp-imagemin');
@@ -57,8 +57,9 @@ gulp.task('styles', function () {
 });
 
 gulp.task('tpl', function () {
-    return gulp.src(tpl + 'pages/*.jade')
-        .pipe(jade({pretty:true})).on('error', log)
+    nunjucksRender.nunjucks.configure(tpl, {watch: false});
+    return gulp.src(tpl + 'pages/*.html')
+        .pipe(nunjucksRender()).on('error', log)
         .pipe(html5Lint()).on('error', log)
         .pipe(gulp.dest(output))
         .pipe(reload({stream:true}));
@@ -98,7 +99,7 @@ gulp.task('watch', function () {
     // Отслеживание файлов .css
     gulp.watch(css, ['styles', browserSync.reload]);
     // Отслеживание html шаблонов
-    gulp.watch(tpl + '**/*.jade', ['tpl', browserSync.reload]);
+    gulp.watch(tpl + '**/*.html', ['tpl', browserSync.reload]);
     // Отслеживание файлов .js
     gulp.watch(js, ['scripts', browserSync.reload]);
     // Отслеживание файлов изображений

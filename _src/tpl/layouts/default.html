@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>  Неразумный перфекционизм</title>
+    <meta name="description" content="">
+    <link href="//fonts.googleapis.com/css?family=PT+Serif:400,700&amp;subset=latin,cyrillic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/styles.css">
+    {% block head %}
+
+    {% endblock %}
+</head>
+<body class="page">
+	{% include 'blocks/header.html' %}
+    <div class="content">
+    	{% block content %}
+    	{% endblock %}
+    </div>
+</body>
+</html>

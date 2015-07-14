@@ -1,0 +1,38 @@
+{% extends 'layouts/default.html' %}
+
+{% block content %}
+<article class="post typesettings">
+    <h1 class="post__title">npm 3.0 вышел в бету</h1>
+    <div class="post__date">
+        June 30, 2015
+    </div>
+    <div class="post__body">
+        <h4>Установка</h4>
+        <p><em>Это <strong>Beta</strong> - используйте на свой страх и риск</em></p>
+        <pre>
+             <code class="bash">
+             $ npm install -g npm@3.0-latest
+             </code>
+        </pre>
+        <h4>Изменения</h4>
+
+        <p>Плоские зависимости, теперь никакой порнографии вида </p>
+        <blockquote>
+        <p>node_modules/gulp-postcss/node_modules/gulp-util/node_modules/lodash.template/node_modules/lodash.keys/node_modules/</p>
+        </blockquote>
+        <p>На простом проекте, размер node_modules стал в два раза меньше. С 28mb до 14mb.</p>
+        <p>Прогресс бар, в 2015 году. В консоли прогресс бар, вот дьявольская магия.</p>
+        <p><img alt="npm 3.0 progress bar" src="//gunlinux.org/static/upload/npm30.gif" title="npm 3.0 progress bar" /></p>
+        <h4>Ссылки</h4>
+
+        <ul>
+            <li>
+                <a href="https://allmychanges.com/p/nodejs/npm/#3.0.0">Changelog</a>
+            </li>
+            <li>
+                <a href="https://www.npmjs.com">npmjs.com</a>
+            </li>
+        </ul>
+    </div>
+</article>
+{% endblock %}
