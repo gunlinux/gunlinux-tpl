@@ -1,0 +1,18 @@
+html {
+    font-size: 21px;
+}
+
+.page {
+  min-width: 768px;
+  max-width: 768px;
+  margin: auto;
+  padding: 10px 0 30px 0;
+  font-size: 21px;
+  font-family: 'PT Serif', serif;
+  @media (max-width:767px) {
+  	width: 100%;
+  	max-width: 100%;
+  	min-width: 100%;
+  }
+}
+
