@@ -1,76 +1,81 @@
 # gunlinux-tpl
-**Шаблон проекта для быстрого старта.**
 
-## Старт проекта
+**My gulp template for fast fronend project start .**
 
-* Установите `gulp`  глобально:
+## Installation
+
+* Install `gulp`  global:
 
 ```bash
 npm i -g gulp
 ```
 
-* Склонируйте себе репозиторий и перейдите в папку проекта:
+* Clone project
 
 ```
 git clone https://github.com/gunlinux/gunlinux-tpl new-project && cd new-project
 ```
 
-* Установите зависимости
+* Install dependencies
 
 ```
 npm install
 ```
 
-* Запустите Gulp.js:
+* Launch Gulp.js:
 
 ```
 gulp
 ```
 
-## Команды для запуска с Gulp.js
+## Gulp.js commands
 
-* Запуск Gulp с отслеживанием изменений:
+* Launch Gulp watch:
 
 ```
 gulp
 
-// Или
+// or
 gulp default
 ```
 
-* Сборка в папку `build`:
+* Build project in `build` directory:
 
 ```
 gulp build
 ```
 
 
-## Структура папок и файлов
+## Files and directories
 
 ```
-├── _src/                              # Исходники
-│   ├── img/                           # Папка изображений
-│   ├── js/                            # Папка со скриптами
-│   │   └── app.js                     # Главный скрипт
-│   ├── css/                           # Папка со стилями postcss
-│   └── tpl/                           # Папка с шаблонами nunjucks (Почти jinja2) 
-│       ├── blocks/                    # Папка с подключаемыми блоками
-│       ├── layouts/                   # Папка с шаблонами раскладки
-│       │   └── default.html           # Шаблон раскладки по умолчанию
-│       └── pages/                     # Папка с генерируемыми страницами
-├── build/                             # Сборка
-│   ├── img/                           # Папка изображений
-│   ├── js/                            # Папка скриптов
-│   └── css/                           # Папка стилей
-│   └── *.html                         # Страницы
-├── .jscsrc                            # Конфигурация проверки JavaScript в JSCS
-├── .jshintrc                          # Конфигурация проверки JavaScript в JSHint
-├── .gitignore                         # Список исключённых файлов из Git
-├── gulpfile.js                        # Файл для запуска Gulp.js
-├── package.json                       # Список пакетов и прочей информации
-└── readme.md                          # Документация шаблона
+├── _src/                              # Source
+│   ├── img/                           # Images
+│   ├── js/                            # Scripts
+│   │   └── app.js                     # Main scripts
+│   ├── css/                           # styles
+│   └── tpl/                           # nunjucks templates folder (Almost jinja2) 
+│       ├── blocks/                    # Bem blocks
+│       ├── layouts/                   # Bem layouts
+│       │   └── default.html           # Default layout
+│       └── pages/                     # Bem pages
+├── build/                             # Build
+│   ├── img/                           # Images
+│   ├── js/                            # Scripts
+│   └── css/                           # Styles
+│   └── *.html                         # Pages
+├── .jscsrc                            # .JSCS config
+├── .jshintrc                          # .JSHint config
+├── .gitignore                         # .gitignore
+├── gulpfile.js                        # Main gulpfile
+├── package.json                       # Packages list and configs
+├── bower.json                         # Bower info and dependencies
+├── readme.md                          # Template readme
+└── changelog.md                       # Template changelog
+
 ```
 
-Описание для некоторых папок:
-* `_src/` - папка с иходниками, из которой генерируюется `build/`.
-* `build/` - сборка сайта, по умолчанию её может не быть и можно без страха и риска её удалить, т.к. она генерируется каждый раз заново, при сборке всё её содержимое удаляется, поэтому руками в неё класть ничего не нужно.
+##Some directories info:
+* `_src/` - source directory
+* `build/` - don't added files by hands here, it's fully generated, except 
+bower_components
