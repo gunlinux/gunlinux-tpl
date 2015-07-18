@@ -26,15 +26,7 @@ function get_version() {
 };
 
 var version = get_version();
-
-var getJsonData = function (file) {
-    d = {};
-    try {
-        d = require('./tpl/data/' + path.basename(file.relative, '.html') + '.json');
-    } catch (err) {}
-    d.version = version;
-    return d;
-};
+console.log(version);
 
 // css
 var autoprefixerOptions = {browsers: ['> 1%', 'IE 7']};
@@ -54,17 +46,16 @@ var jscs = require('gulp-jscs');
 var uglify = require('gulp-uglify');
 // tpl
 var nunjucksRender = require('gulp-nunjucks-render');
-var html5Lint = require('gulp-html5-lint');
 var data = require('gulp-data');
 // images
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 
 gulp.task('clean', function () {
-    return del([output + '/*']);
+    return del([output + '/!(components)*']);
 });
 
-gulp.task('styles', function () {
+gulp.task('styles', ['clean'], function () {
     return gulp.src(css)
         .pipe(sourcemaps.init())
         .pipe(concat('styles.css'))
@@ -76,17 +67,16 @@ gulp.task('styles', function () {
         .pipe(reload({stream:true}));
 });
 
-gulp.task('tpl', function () {
+gulp.task('tpl', ['clean'], function () {
     nunjucksRender.nunjucks.configure(tpl, {watch: false});
     return gulp.src([tpl + 'pages/*.html'])
-         .pipe(data(getJsonData))
-        .pipe(nunjucksRender()).on('error', log)
-        .pipe(html5Lint()).on('error', log)
+        .pipe(data({version: version}))
+        .pipe(nunjucksRender(tpl, {watch: false})).on('error', log)
         .pipe(gulp.dest(output))
         .pipe(reload({stream:true}));
 });
 
-gulp.task('scripts', function () {
+gulp.task('scripts', ['clean'], function () {
     return gulp.src(js)
         .pipe(jshint()).on('error', log)
         .pipe(jscs()).on('error', log)
@@ -97,7 +87,7 @@ gulp.task('scripts', function () {
         .pipe(reload({stream:true}));
 });
 
-gulp.task('images', function () {
+gulp.task('images', ['clean'], function () {
     return gulp.src(images)
         .pipe(imagemin({
             progressive: true,
@@ -128,5 +118,6 @@ gulp.task('watch', function () {
     // Отслеживание всех файлов в папке build/, перезагрузка при изменении
     gulp.watch(output, browserSync.reload);
 });
+
 gulp.task('build', ['clean', 'styles', 'tpl', 'scripts', 'images']);
 gulp.task('default', ['build', 'browser-sync', 'watch']);
