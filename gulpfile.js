@@ -55,7 +55,7 @@ gulp.task('clean', function () {
     return del([output + '/!(components)*']);
 });
 
-gulp.task('styles', ['clean'], function () {
+gulp.task('styles', function () {
     return gulp.src(css)
         .pipe(sourcemaps.init())
         .pipe(concat('styles.css'))
@@ -67,7 +67,7 @@ gulp.task('styles', ['clean'], function () {
         .pipe(reload({stream:true}));
 });
 
-gulp.task('tpl', ['clean'], function () {
+gulp.task('tpl', function () {
     nunjucksRender.nunjucks.configure(tpl, {watch: false});
     return gulp.src([tpl + 'pages/*.html'])
         .pipe(data({version: version}))
@@ -76,7 +76,7 @@ gulp.task('tpl', ['clean'], function () {
         .pipe(reload({stream:true}));
 });
 
-gulp.task('scripts', ['clean'], function () {
+gulp.task('scripts', function () {
     return gulp.src(js)
         .pipe(jshint()).on('error', log)
         .pipe(jscs()).on('error', log)
@@ -87,7 +87,7 @@ gulp.task('scripts', ['clean'], function () {
         .pipe(reload({stream:true}));
 });
 
-gulp.task('images', ['clean'], function () {
+gulp.task('images', function () {
     return gulp.src(images)
         .pipe(imagemin({
             progressive: true,
