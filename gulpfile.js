@@ -20,13 +20,8 @@ function log(error) {
     this.emit('end');
 }
 var fs = require('fs');
-function get_version() {
-    var text = fs.readFileSync('./package.json', 'utf8');
-    return JSON.parse(text.toString()).version;
-};
 
-var version = get_version();
-console.log(version);
+var pkg = require('./package.json');
 
 // css
 var autoprefixerOptions = {browsers: ['> 1%', 'IE 7']};
@@ -47,9 +42,6 @@ var uglify = require('gulp-uglify');
 // tpl
 var nunjucksRender = require('gulp-nunjucks-render');
 var data = require('gulp-data');
-// images
-var imagemin = require('gulp-imagemin');
-var pngquant = require('imagemin-pngquant');
 
 gulp.task('clean', function () {
     return del([output + '/!(components)*']);
@@ -70,7 +62,7 @@ gulp.task('styles', function () {
 gulp.task('tpl', function () {
     nunjucksRender.nunjucks.configure(tpl, {watch: false});
     return gulp.src([tpl + 'pages/*.html'])
-        .pipe(data({version: version}))
+        .pipe(data({version: pkg.version}))
         .pipe(nunjucksRender(tpl, {watch: false})).on('error', log)
         .pipe(gulp.dest(output))
         .pipe(reload({stream:true}));
@@ -89,11 +81,6 @@ gulp.task('scripts', function () {
 
 gulp.task('images', function () {
     return gulp.src(images)
-        .pipe(imagemin({
-            progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()]
-        }))
         .pipe(gulp.dest(output + '/img'));
 });
 
