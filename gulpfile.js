@@ -2,7 +2,7 @@
 
 var output = 'build';
 var js = ['_src/js/*.js'];
-var css = ['_src/css/*.css'];
+var css = ['_src/css/reset.css', '_src/css/!(reset)*.css'];
 var tpl = ['_src/tpl/'];
 var images = ['_src/img/*'];
 
@@ -13,7 +13,6 @@ var del = require('del');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var sourcemaps = require('gulp-sourcemaps');
-var path = require('path');
 
 function log(error) {
     console.log([
@@ -23,8 +22,6 @@ function log(error) {
         '----------ERROR MESSAGE END----------'].join('\n'));
     this.end();
 }
-
-var fs = require('fs');
 
 var pkg = require('./package.json');
 
@@ -85,8 +82,11 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('images', function () {
-    return gulp.src(images)
-        .pipe(gulp.dest(output + '/img'));
+    del(['build/img'], function (err) {
+        if (err) return;
+        return gulp.src(images)
+            .pipe(gulp.dest(output + '/img'));
+    });
 });
 
 // Статический сервер
@@ -98,7 +98,7 @@ gulp.task('browser-sync', ['build'], function () {
     });
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', ['build'], function () {
     // Отслеживание файлов .css
     gulp.watch(css, ['styles', browserSync.reload]);
     // Отслеживание html шаблонов
