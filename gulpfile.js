@@ -16,9 +16,14 @@ var sourcemaps = require('gulp-sourcemaps');
 var path = require('path');
 
 function log(error) {
-    console.log(error.toString());
-    this.emit('end');
+    console.log([
+        '----------ERROR MESSAGE START----------',
+        error.name + ' in ' + error.plugin,
+        error.message,
+        '----------ERROR MESSAGE END----------'].join('\n'));
+    this.end();
 }
+
 var fs = require('fs');
 
 var pkg = require('./package.json');
